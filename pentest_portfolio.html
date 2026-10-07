@@ -1,0 +1,759 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d12">
+  <meta name="description" content="Ahmed Mostafa is a penetration testing engineer focused on vulnerability assessment, web security, and network security.">
+  <title>Ahmed Mostafa | Penetration Testing Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================
+       1. VARIABLES
+       ========================================================== */
+    :root {
+      color-scheme: dark;
+      --bg: #090d12;
+      --surface: #0e141b;
+      --surface-raised: #121a22;
+      --line: rgba(177, 198, 211, .12);
+      --line-strong: rgba(177, 198, 211, .22);
+      --text: #eaf0f3;
+      --muted: #9aa9b3;
+      --soft: #71818d;
+      --green: #92edbd;
+      --cyan: #82d7e5;
+      --mono: "DM Mono", Consolas, monospace;
+      --sans: "DM Sans", Arial, sans-serif;
+      --display: "Manrope", Arial, sans-serif;
+      --width: 1120px;
+    }
+
+
+    /* ==========================================================
+       2. BASE & LAYOUT
+       ========================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 73% 5%, rgba(32, 99, 96, .12), transparent 31rem),
+        radial-gradient(ellipse at 8% 44%, rgba(25, 63, 80, .10), transparent 35rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    body::before {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 54px 54px;
+      content: "";
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
+      pointer-events: none;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(var(--width), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow, .mono { font-family: var(--mono); }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: .76rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .section { padding: 104px 0; }
+    .section.alt { background: linear-gradient(180deg, rgba(13, 19, 26, .78), rgba(13, 19, 26, .44)); border-block: 1px solid rgba(177,198,211,.055); }
+    .section-heading { max-width: 690px; margin-bottom: 42px; }
+    .section-heading h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -.045em;
+      line-height: 1.12;
+    }
+    .section-heading > p:last-child { max-width: 640px; margin: 15px 0 0; color: var(--muted); }
+    .accent { color: var(--green); }
+    .muted { color: var(--muted); }
+
+    /* ==========================================================
+       3. NAVIGATION
+       ========================================================== */
+    .topbar {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 13, 18, .86);
+      backdrop-filter: blur(16px);
+    }
+    .nav-wrap { display: flex; min-height: 72px; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-family: var(--display); font-size: .95rem; font-weight: 800; letter-spacing: -.02em; text-decoration: none; white-space: nowrap; }
+    .brand-mark { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(146,237,189,.4); border-radius: 9px; color: var(--green); font: 500 .74rem var(--mono); }
+    .nav-links { display: flex; align-items: center; justify-content: flex-end; gap: clamp(12px, 2vw, 25px); margin: 0; padding: 0; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: .78rem; text-decoration: none; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a[aria-current="location"] { color: var(--green); }
+    .menu-toggle { display: none; border: 1px solid var(--line-strong); border-radius: 9px; padding: 8px 11px; background: var(--surface); color: var(--text); cursor: pointer; }
+
+
+    /* ==========================================================
+       4. HERO
+       ========================================================== */
+    .hero { display: grid; min-height: min(790px, calc(100svh - 72px)); align-items: center; padding: 76px 0 86px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(290px, .72fr); align-items: center; gap: clamp(48px, 9vw, 116px); }
+    .hero-copy { max-width: 700px; }
+    .availability { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 26px; padding: 7px 11px; border: 1px solid rgba(146,237,189,.17); border-radius: 999px; background: rgba(146,237,189,.045); color: #c7d8d2; font: .69rem var(--mono); letter-spacing: .045em; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(146,237,189,.7); }
+    .hero h1 { margin: 0; font-family: var(--display); font-size: clamp(3.4rem, 8vw, 6.35rem); font-weight: 800; letter-spacing: -.085em; line-height: .98; }
+    .hero h1 span { display: block; color: var(--green); }
+    .hero-role { margin: 22px 0 0; color: #c3d0d6; font-size: clamp(1rem, 2vw, 1.18rem); }
+    .hero-role strong { color: var(--text); font-weight: 600; }
+    .hero-lede { max-width: 600px; margin: 20px 0 0; color: var(--muted); font-size: 1.03rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
+    .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 9px; border: 1px solid var(--line-strong); border-radius: 8px; padding: 0 17px; color: var(--text); font-size: .85rem; font-weight: 600; text-decoration: none; transition: transform .2s, border-color .2s, background .2s; }
+    .button:hover { transform: translateY(-2px); border-color: rgba(146,237,189,.55); }
+    .button.primary { border-color: var(--green); background: var(--green); color: #0a1711; }
+    .button.primary:hover { background: #b3f5d0; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 38px; color: var(--soft); font: .72rem var(--mono); }
+    .hero-meta span::before { margin-right: 8px; color: var(--green); content: "↳"; }
+    .portrait-shell { position: relative; justify-self: center; width: min(100%, 355px); }
+    .portrait-shell::before { position: absolute; inset: -13px 13px 13px -13px; border: 1px solid rgba(130,215,229,.34); border-radius: 18px; content: ""; }
+    .portrait-frame { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border: 1px solid rgba(214,232,236,.15); border-radius: 15px; background: #22121c; box-shadow: 0 32px 90px rgba(0,0,0,.4); }
+    .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 31%; }
+    .portrait-frame::after { position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgba(7,12,16,.72)); content: ""; }
+    .portrait-label { position: absolute; z-index: 1; right: 16px; bottom: 15px; left: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #f1f5f5; font: .7rem var(--mono); }
+    .portrait-label span:last-child { color: var(--green); }
+    .hero-index { position: absolute; top: 16px; left: 17px; z-index: 1; color: rgba(255,255,255,.85); font: .68rem var(--mono); }
+
+
+    /* ==========================================================
+       5. ABOUT
+       ========================================================== */
+    .about-wrap { max-width: 820px; }
+    .about-copy p { margin: 0 0 17px; color: var(--muted); }
+    .about-copy p:last-child { margin-bottom: 0; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .tag { border: 1px solid var(--line); border-radius: 5px; padding: 5px 9px; background: rgba(255,255,255,.025); color: #bdc9ce; font: .69rem var(--mono); }
+
+
+    /* ==========================================================
+       6. SKILLS (cards)
+       ========================================================== */
+    .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .card { height: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: linear-gradient(150deg, rgba(18,26,34,.88), rgba(13,19,25,.82)); transition: border-color .2s, transform .2s, background .2s; }
+    .card:hover { transform: translateY(-3px); border-color: rgba(146,237,189,.31); background: var(--surface-raised); }
+    .card-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 19px; }
+    .card-icon { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(130,215,229,.2); border-radius: 10px; color: var(--cyan); font: 1rem var(--mono); }
+    .level { color: var(--green); font: .64rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .card h3 { margin: 0; font-family: var(--display); font-size: 1.08rem; letter-spacing: -.03em; }
+    .card > p { margin: 9px 0 0; color: var(--muted); font-size: .87rem; }
+    .card .tag-list { margin-top: 17px; }
+    .skill-footnote { margin: 22px 0 0; color: var(--soft); font-size: .79rem; }
+
+
+    /* ==========================================================
+       7. TOOLS
+       ========================================================== */
+    .tool-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .tool-group { border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: rgba(14,20,27,.82); }
+    .tool-group h3 { margin: 0 0 17px; color: #dce6e8; font: 600 1rem var(--display); }
+    .tool-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tool-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; color: #c4d0d5; font-size: .78rem; }
+    .tool-chip::before { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); content: ""; }
+    .tool-group .subnote { margin: 14px 0 0; color: var(--soft); font-size: .76rem; }
+
+
+    /* ==========================================================
+       8. EDUCATION / EXPERIENCE / TRAINING / CREDENTIALS
+       ========================================================== */
+    .training-grid, .cert-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .training-card, .cert-card { border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: rgba(14,20,27,.85); }
+    .training-card h3, .cert-card h3 { margin: 0; font-family: var(--display); font-size: 1rem; }
+    .training-card p, .cert-card p { margin: 8px 0 0; color: var(--muted); font-size: .85rem; }
+    .status { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; color: var(--green); font: .68rem var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+    .status::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; }
+    .status.learning { color: var(--cyan); }
+    .status.neutral { color: #b7c3ca; }
+    .score { display: block; margin-top: 11px; color: #d8e5e3; font: .76rem var(--mono); }
+    .details-card { margin-top: 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(14,20,27,.75); }
+    .details-card summary { padding: 18px 21px; color: #d2dce0; cursor: pointer; font-size: .86rem; font-weight: 600; }
+    .details-card summary::marker { color: var(--green); }
+    .details-card p { margin: 0; padding: 0 21px 20px; color: var(--muted); font-size: .84rem; }
+
+
+    /* ==========================================================
+       9. PROJECTS & SERVICES
+       ========================================================== */
+    .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .project-card { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; padding: 26px; background: linear-gradient(140deg, rgba(20,31,39,.95), rgba(13,19,26,.85)); }
+    .project-card::after { position: absolute; right: -50px; bottom: -83px; width: 190px; height: 190px; border: 1px solid rgba(130,215,229,.11); border-radius: 50%; box-shadow: 0 0 0 20px rgba(130,215,229,.025), 0 0 0 42px rgba(130,215,229,.018); content: ""; pointer-events: none; }
+    .project-state { display: inline-block; border: 1px solid rgba(130,215,229,.26); border-radius: 999px; padding: 5px 9px; color: var(--cyan); font: .65rem var(--mono); letter-spacing: .07em; text-transform: uppercase; }
+    .project-card h3 { max-width: 450px; margin: 17px 0 0; font: 700 1.38rem/1.3 var(--display); letter-spacing: -.035em; }
+    .project-card > p { max-width: 510px; margin: 12px 0 0; color: var(--muted); font-size: .87rem; }
+    .project-card .tag-list { position: relative; z-index: 1; }
+    .project-disclaimer { position: relative; z-index: 1; margin-top: 18px; color: var(--soft); font: .72rem var(--mono); }
+    .sub-block { margin-top: 52px; }
+    .sub-block:first-of-type { margin-top: 0; }
+    .sub-heading { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font: 700 1.3rem var(--display); letter-spacing: -.03em; }
+    .sub-heading .mono { color: var(--green); font-size: .78rem; font-weight: 500; }
+    .sub-note { max-width: 640px; margin: -8px 0 18px; color: var(--soft); font-size: .82rem; }
+    .meta-line { display: block; margin-top: 10px; color: #d8e5e3; font: .74rem var(--mono); }
+    .single-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+    .project-shot { position: relative; z-index: 1; overflow: hidden; aspect-ratio: 16 / 9; margin: 0 0 20px; border: 1px solid var(--line-strong); border-radius: 10px; background: #0a1015; }
+    .project-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+    .project-shot figcaption { display: none; }
+    .project-shot.missing { display: grid; place-items: center; border-style: dashed; padding: 14px; text-align: center; }
+    .project-shot.missing img { display: none; }
+    .project-shot.missing figcaption { display: block; color: var(--soft); font: .72rem var(--mono); }
+    .project-links { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .project-links .button { min-height: 38px; padding: 0 13px; font-size: .78rem; }
+    .service-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 30px; }
+
+
+    /* ==========================================================
+       10. TIMELINE
+       ========================================================== */
+    .timeline { position: relative; max-width: 850px; margin: 0 auto; padding-left: 29px; }
+    .timeline::before { position: absolute; top: 7px; bottom: 8px; left: 6px; width: 1px; background: linear-gradient(var(--green), rgba(130,215,229,.16)); content: ""; }
+    .timeline-item { position: relative; padding: 0 0 27px 18px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { position: absolute; top: 6px; left: -28px; width: 9px; height: 9px; border: 2px solid var(--green); border-radius: 50%; background: var(--bg); content: ""; }
+    .timeline-item.future::before { border-color: var(--soft); }
+    .timeline-item h3 { margin: 0; font: 600 1rem var(--display); }
+    .timeline-item p { margin: 5px 0 0; color: var(--muted); font-size: .85rem; }
+    .timeline-item .mono { display: inline-block; margin-top: 8px; color: var(--soft); font-size: .67rem; letter-spacing: .06em; text-transform: uppercase; }
+
+
+    /* ==========================================================
+       11. TERMINAL
+       ========================================================== */
+    .terminal { overflow: hidden; border: 1px solid rgba(130,215,229,.19); border-radius: 13px; background: #0a1015; box-shadow: 0 24px 70px rgba(0,0,0,.23); }
+    .terminal-bar { display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--line); padding: 13px 16px; background: #10171d; }
+    .terminal-dot { width: 8px; height: 8px; border-radius: 50%; background: #61717a; }
+    .terminal-dot:first-child { background: #e8877d; }
+    .terminal-dot:nth-child(2) { background: #dcb56c; }
+    .terminal-dot:nth-child(3) { background: #79c993; }
+    .terminal-title { margin: 0 auto; color: var(--soft); font: .69rem var(--mono); }
+    .terminal-body { min-height: 216px; padding: 23px; font: .81rem/1.9 var(--mono); }
+    .terminal-line { margin: 0 0 5px; color: #c4d0d4; }
+    .terminal-prompt { color: var(--green); }
+    .terminal-output { margin: 0 0 13px 17px; color: #a4b4bd; white-space: pre-wrap; }
+    .terminal-output strong { color: var(--cyan); font-weight: 400; }
+    .terminal-controls { display: flex; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--line); padding: 13px 16px; }
+    .command-button { border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; background: transparent; color: #bbcad0; font: .7rem var(--mono); cursor: pointer; }
+    .command-button:hover, .command-button:focus-visible { border-color: var(--green); color: var(--green); }
+    .terminal-caption { margin: 13px 0 0; color: var(--soft); font-size: .76rem; }
+
+
+    /* ==========================================================
+       12. CONTACT & FOOTER
+       ========================================================== */
+    .contact-panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 34px; align-items: center; border: 1px solid var(--line); border-radius: 16px; padding: clamp(25px, 5vw, 48px); background: linear-gradient(120deg, rgba(19,31,37,.92), rgba(14,20,27,.85)); }
+    .contact-panel h2 { max-width: 580px; margin: 0; font: 700 clamp(1.9rem,4vw,2.8rem)/1.13 var(--display); letter-spacing: -.05em; }
+    .contact-panel p { max-width: 590px; margin: 15px 0 0; color: var(--muted); }
+    .contact-list { display: grid; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .contact-placeholder { display: block; min-width: 0; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: rgba(5,10,14,.22); text-decoration: none; transition: border-color .2s, background .2s; }
+    .contact-placeholder:hover { border-color: rgba(146,237,189,.45); background: rgba(146,237,189,.04); }
+    .contact-placeholder span { display: block; color: #cbd5d9; font-size: .77rem; }
+    .contact-placeholder small { color: var(--soft); font: .65rem var(--mono); overflow-wrap: anywhere; }
+    footer { padding: 27px 0; border-top: 1px solid var(--line); color: var(--soft); font-size: .73rem; }
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+    footer p { margin: 0; }
+
+    /* ==========================================================
+       13. UTILITIES & ANIMATION
+       ========================================================== */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+    /* ==========================================================
+       14. RESPONSIVE
+       ========================================================== */
+    @media (max-width: 900px) {
+      .nav-links { gap: 13px; }
+      .nav-links a { font-size: .72rem; }
+      .hero-grid { gap: 45px; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    @media (max-width: 720px) {
+      .container { width: min(var(--width), calc(100% - 36px)); }
+      .section { padding: 76px 0; }
+      .nav-wrap { min-height: 64px; }
+      .menu-toggle { display: inline-flex; align-items: center; gap: 8px; }
+      .nav-links { position: absolute; top: 63px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); padding: 8px 18px 15px; background: rgba(9,13,18,.98); }
+      .nav-links.open { display: flex; flex-direction: column; }
+      .nav-links a { display: block; padding: 10px 4px; font-size: .87rem; }
+      .hero { min-height: auto; padding: 68px 0 76px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .hero-copy { order: 1; }
+      .portrait-shell { order: 0; width: min(65%, 290px); }
+      .hero h1 { font-size: clamp(3.4rem, 14vw, 5.2rem); }
+      .hero-meta { gap: 10px 18px; }
+      .tool-groups, .training-grid, .cert-grid, .project-grid, .service-grid, .contact-panel { grid-template-columns: 1fr; }
+      .contact-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .container { width: calc(100% - 32px); }
+      .hero { padding-top: 49px; }
+      .hero h1 { font-size: clamp(3.05rem, 15vw, 4.3rem); }
+      .hero-role { line-height: 1.6; }
+      .portrait-shell { width: min(72%, 260px); }
+      .hero-actions .button { flex: 1 1 auto; }
+      .card-grid { grid-template-columns: 1fr; }
+      .contact-list { grid-template-columns: 1fr 1fr; }
+      .card, .training-card, .cert-card, .tool-group { padding: 19px; }
+      .terminal-body { padding: 17px; font-size: .73rem; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="container nav-wrap" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Ahmed Mostafa, home"><span class="brand-mark">AM</span> AHMED MOSTAFA</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links"><span aria-hidden="true">☰</span> Menu</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certifications">Credentials</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="availability"><span class="status-dot" aria-hidden="true"></span> PENETRATION TESTING ENGINEER · SECURITY PRACTITIONER</p>
+          <h1>Ahmed<span>Mostafa.</span></h1>
+          <p class="hero-role"><strong>Penetration Testing Engineer</strong> · Vulnerability Assessment · Web Security</p>
+          <p class="hero-lede">Learning offensive security by understanding how systems work, testing them in authorized environments, and building a strong foundation one step at a time.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#skills">Explore my skill set <span aria-hidden="true">↘</span></a>
+            <a class="button" href="#contact">Get in touch</a>
+            <a class="button" href="Ahmed_Mostafa_cv .pdf" download="Ahmed_Mostafa_CV.pdf" aria-label="Download Ahmed Mostafa CV">⬇ Download CV</a>
+          </div>
+          <div class="hero-meta" aria-label="Current profile">
+            <span>Penetration Testing Engineer</span>
+            <span>Egypt</span>
+            <span>Authorized labs only</span>
+          </div>
+        </div>
+        <div class="portrait-shell">
+          <div class="portrait-frame">
+            <span class="hero-index">PROFILE / 01</span>
+            <img src="Gemini_Generated_Image_fjzm95fjzm95fjzm.jpg" alt="Portrait of Ahmed Mostafa" fetchpriority="high">
+            <div class="portrait-label"><span>Ahmed Mostafa</span><span>SECURITY / LEARNER</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">01 / About</p>
+          <h2>From networking foundations to <span class="accent">offensive security.</span></h2>
+          <p>Penetration testing engineer and Network Engineering student building a strong foundation in offensive security.</p>
+        </div>
+        <div class="about-copy reveal">
+          <p>I'm Ahmed Mostafa, a penetration testing engineer and Network Engineering student at Fayoum International Technological University. My path into cybersecurity started with networking and computer fundamentals, then grew into a deeper focus on vulnerability assessment and penetration testing.</p>
+          <p>I enjoy learning how systems fit together, examining how they can fail, and understanding how security controls can be improved. I’m currently developing my skills across web application security, network security, Linux and Windows fundamentals, and hands-on penetration testing practice.</p>
+          <p>I’m still learning, and that is part of the work: building fundamentals, practicing in authorized labs, documenting what I learn, and steadily taking on more complex security problems.</p>
+          <div class="tag-list" aria-label="Current areas of focus">
+            <span class="tag">Vulnerability Assessment</span><span class="tag">Web Security</span><span class="tag">Network Security</span><span class="tag">Pentest Methodology</span><span class="tag">Python Automation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">02 / Technical toolkit</p>
+          <h2>Skills with an honest <span class="accent">learning status.</span></h2>
+          <p>Built around the fundamentals I’m studying and practicing. No percentage scores — just a clear view of my current focus.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">01</span><span class="level">FOUNDATION</span></div>
+            <h3>Network Security</h3>
+            <p>Networking concepts that support systematic security assessment and troubleshooting.</p>
+            <div class="tag-list"><span class="tag">TCP/IP & OSI</span><span class="tag">Switching / Routing</span><span class="tag">Subnetting</span><span class="tag">VLAN concepts</span><span class="tag">DNS / DHCP</span><span class="tag">HTTP / HTTPS</span><span class="tag">SMB</span><span class="tag">Firewalls</span><span class="tag">Recon & enumeration</span><span class="tag">Port scanning</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">02</span><span class="level">PRACTICING</span></div>
+            <h3>Penetration Testing</h3>
+            <p>Developing a repeatable, evidence-led approach to authorized security testing.</p>
+            <div class="tag-list"><span class="tag">Reconnaissance</span><span class="tag">Service enumeration</span><span class="tag">Vulnerability assessment</span><span class="tag">Exploitation fundamentals</span><span class="tag">Privilege escalation concepts</span><span class="tag">Post-exploitation concepts</span><span class="tag">Methodology</span><span class="tag">Reporting / remediation</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">03</span><span class="level">CURRENT FOCUS</span></div>
+            <h3>Web & API Security</h3>
+            <p>Learning how to analyze application behavior and validate security issues responsibly.</p>
+            <div class="tag-list"><span class="tag">HTTP requests / responses</span><span class="tag">Web architecture</span><span class="tag">Authentication</span><span class="tag">Authorization</span><span class="tag">Sessions</span><span class="tag">Input validation</span><span class="tag">OWASP concepts</span><span class="tag">API fundamentals</span><span class="tag">Burp Suite workflow</span><span class="tag">Content discovery</span><span class="tag">Vulnerability validation</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">04</span><span class="level">FOUNDATION</span></div>
+            <h3>Linux</h3>
+            <p>Building confidence with the operating system and command-line tools common in labs.</p>
+            <div class="tag-list"><span class="tag">Linux fundamentals</span><span class="tag">Kali Linux</span><span class="tag">Bash / shell</span><span class="tag">File permissions</span><span class="tag">Processes / services</span><span class="tag">Networking commands</span><span class="tag">Packages</span><span class="tag">Troubleshooting</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">05</span><span class="level">FOUNDATION</span></div>
+            <h3>Windows</h3>
+            <p>Studying Windows fundamentals and security concepts relevant to testing environments.</p>
+            <div class="tag-list"><span class="tag">Windows fundamentals</span><span class="tag">Active Directory</span><span class="tag">Windows networking</span><span class="tag">PowerShell fundamentals</span><span class="tag">Security concepts</span><span class="tag">Troubleshooting</span><span class="tag">Security testing fundamentals</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">06</span><span class="level">GROWING</span></div>
+            <h3>Programming & scripting</h3>
+            <p>Strengthening Python in particular for security automation, tooling, and future projects.</p>
+            <div class="tag-list"><span class="tag">Python — current focus</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">Basic .NET</span><span class="tag">Flutter / Firebase / REST concepts</span></div>
+          </article>
+        </div>
+        <p class="skill-footnote">Skill labels describe current learning emphasis, not a formal proficiency assessment. All practice takes place in authorized environments.</p>
+      </div>
+    </section>
+
+    <section class="section alt" id="tools">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">03 / Security arsenal</p>
+          <h2>Tools I’m learning to use <span class="accent">with purpose.</span></h2>
+          <p>A working set for labs, network analysis, and application testing — not a claim of expert-level mastery.</p>
+        </div>
+        <div class="tool-groups">
+          <article class="tool-group reveal"><h3>Network reconnaissance & analysis</h3><div class="tool-chips"><span class="tool-chip">Nmap</span><span class="tool-chip">Wireshark</span><span class="tool-chip">Nessus concepts</span></div><p class="subnote">Foundational exposure and learning.</p></article>
+          <article class="tool-group reveal"><h3>Web & application testing</h3><div class="tool-chips"><span class="tool-chip">Burp Suite</span><span class="tool-chip">Browser developer tools</span><span class="tool-chip">HTTP testing tools</span></div><p class="subnote">Used as part of web-security learning workflows.</p></article>
+          <article class="tool-group reveal"><h3>Exploitation fundamentals</h3><div class="tool-chips"><span class="tool-chip">Metasploit Framework</span></div><p class="subnote">Explored in controlled, authorized learning environments.</p></article>
+          <article class="tool-group reveal"><h3>Operating systems & general security</h3><div class="tool-chips"><span class="tool-chip">Kali Linux</span><span class="tool-chip">Vulnerability scanners</span><span class="tool-chip">Enumeration tools</span></div><p class="subnote">Building familiarity through structured practice.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">04 / Education & Development</p>
+          <h2>Learning in progress, <span class="accent">clearly marked.</span></h2>
+          <p>Academic study, structured training, and self-directed practice are all part of my path into offensive security.</p>
+        </div>
+
+        <div class="sub-block" id="edu-education">
+          <h3 class="sub-heading reveal"><span class="mono">4.1</span> Education</h3>
+          <div class="single-grid">
+            <article class="training-card reveal">
+              <h3>Network Engineering — Fayoum International Technological University</h3>
+              <p>Academic background that provided a solid foundation in computing, communications, and network infrastructure.</p>
+              <span class="meta-line">Expected Graduation: 2027</span>
+              <span class="status learning">Currently studying</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="sub-block" id="edu-experience">
+          <h3 class="sub-heading reveal"><span class="mono">4.2</span> Experience & Practical Labs</h3>
+          <div class="training-grid">
+            <article class="training-card reveal">
+              <h3>Help Desk Technician — Quick Support Company</h3>
+              <p>Hands-on technical support work that builds practical troubleshooting and user-support experience.</p>
+              <span class="status neutral">Work experience</span>
+            </article>
+            <article class="training-card reveal">
+              <h3>Independent study & authorized labs</h3>
+              <p>Ongoing penetration-testing study and practical learning through TryHackMe, web-security labs, and CTF-style environments.</p>
+              <span class="status learning">Currently learning / Practical experience</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="sub-block" id="edu-training">
+          <h3 class="sub-heading reveal"><span class="mono">4.3</span> Training & Professional Development</h3>
+          <div class="training-grid">
+            <article class="training-card reveal"><h3>DEPI — Vulnerability Analyst & Penetration Tester</h3><p>Professional development track focused on vulnerability analysis and penetration testing.</p><span class="status learning">In progress</span></article>
+            <article class="training-card reveal"><h3>ITI / Creativa cybersecurity training</h3><p>Cybersecurity-related training covering Computer Network Essentials, Switching & Routing, Hacking Techniques, Huawei HCDDA-Tech Essentials, and practical CTF-style learning.</p><span class="status neutral">Training background</span></article>
+            <article class="training-card reveal"><h3>NTI networking training</h3><p>CCNA-oriented networking training that helped build my networking foundation. This is training, not a Cisco CCNA certification.</p><span class="status neutral">Training completed</span></article>
+            <article class="training-card reveal"><h3>Cisco Networking Academy</h3><p>Networking learning through Cisco Networking Academy material, including the Learn-A-Thon 2026 learning milestone.</p><span class="status neutral">Learning achievement</span></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="certifications">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">05 / Credentials</p>
+          <h2>Earned credentials & <span class="accent">training milestones.</span></h2>
+          <p>Training is identified as training; certifications are listed only where a credential is confirmed.</p>
+        </div>
+        <div class="cert-grid">
+          <article class="cert-card reveal"><h3>Cisco Certified Support Technician (CCST) Networking</h3><p>Networking certification.</p><span class="score">Exam score: 788 / 1000 · Passing score: 700 / 1000</span><span class="status">Achieved</span></article>
+          <article class="cert-card reveal"><h3>Cisco Networking Academy Learn-A-Thon 2026</h3><p>Networking Academy learning achievement.</p><span class="status neutral">Achievement</span></article>
+          <article class="cert-card reveal"><h3>NTI CCNA-oriented training</h3><p>Networking training / completion. Not represented as an official Cisco CCNA certification.</p><span class="status neutral">Training completed</span></article>
+          <article class="cert-card reveal"><h3>Future credentials</h3><p>Additional certifications will appear here only after they are earned and verified.</p><span class="status learning">Not yet claimed</span></article>
+        </div>
+        <details class="details-card reveal">
+          <summary>How I describe training and certifications</summary>
+          <p>Coursework and professional-development tracks are shown as training or in progress. They are not presented as certifications unless an earned credential is explicitly confirmed.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">06 / Services</p>
+          <h2>How I can <span class="accent">help.</span></h2>
+          <p>Services offered within authorized scope and at my current learning level. Written permission is required before any testing.</p>
+        </div>
+        <div class="service-grid">
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">01</span><span class="level">WEB</span></div>
+            <h3>Web Application Vulnerability Assessment</h3>
+            <p>Review of authentication, authorization, sessions, and input handling, with validated findings and clear remediation advice.</p>
+            <div class="tag-list"><span class="tag">OWASP</span><span class="tag">Burp Suite</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">02</span><span class="level">NETWORK</span></div>
+            <h3>Network Security Assessment</h3>
+            <p>Reconnaissance, port scanning, and service enumeration to identify exposed services and misconfigurations.</p>
+            <div class="tag-list"><span class="tag">Nmap</span><span class="tag">Wireshark</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">03</span><span class="level">REPORTING</span></div>
+            <h3>Security Reporting & Remediation Guidance</h3>
+            <p>Clear, evidence-based write-ups that explain each issue, its impact, and practical steps to fix it.</p>
+            <div class="tag-list"><span class="tag">Documentation</span><span class="tag">Remediation</span></div>
+          </article>
+          <article class="card reveal">
+            <div class="card-topline"><span class="card-icon" aria-hidden="true">04</span><span class="level">SUPPORT</span></div>
+            <h3>Networking & Technical Support</h3>
+            <p>Network setup, troubleshooting, and IT support backed by networking training and help-desk experience.</p>
+            <div class="tag-list"><span class="tag">Cisco</span><span class="tag">Troubleshooting</span></div>
+          </article>
+        </div>
+        <div class="cta-row reveal">
+          <a class="button primary" href="#contact">Request a service <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">07 / Projects & Hands-on Practice</p>
+          <h2>Selected work and <span class="accent">lab write-ups.</span></h2>
+          <p>Authorized environments help me connect fundamentals to real workflows. Below is work from my own labs, with screenshots and write-ups. No rankings, machine counts, or challenge results are claimed.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card reveal">
+            <figure class="project-shot">
+              <img src="images/python-script-terminal.png" alt="Terminal screenshot of a Python script running" loading="lazy">
+              <figcaption>Add: terminal screenshot of your Python script running</figcaption>
+            </figure>
+            <span class="project-state">Automation</span>
+            <h3>Python Security Script</h3>
+            <p>A small Python utility I wrote to automate a repetitive recon task, running in a clean Kali / Ubuntu terminal.</p>
+            <div class="tag-list"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Linux</span></div>
+            <div class="project-links"><a class="button" href="https://github.com/ahmed12080" target="_blank" rel="noopener noreferrer">View code ↗</a></div>
+            <p class="project-disclaimer">Educational use only.</p>
+          </article>
+          <article class="project-card reveal">
+            <figure class="project-shot">
+              <img src="images/nmap-scan.png" alt="Terminal screenshot of an Nmap scan" loading="lazy">
+              <figcaption>Add: screenshot of an Nmap scan in your terminal</figcaption>
+            </figure>
+            <span class="project-state">Network Recon</span>
+            <h3>Nmap Scan & Enumeration</h3>
+            <p>Port scanning and service enumeration against an authorized lab target, with notes on what each result means.</p>
+            <div class="tag-list"><span class="tag">Nmap</span><span class="tag">Enumeration</span><span class="tag">Network Security</span></div>
+            <div class="project-links"><a class="button" href="https://github.com/ahmed12080" target="_blank" rel="noopener noreferrer">View notes ↗</a></div>
+            <p class="project-disclaimer">Authorized lab environments only.</p>
+          </article>
+          <article class="project-card reveal">
+            <figure class="project-shot">
+              <img src="images/burp-intercept.png" alt="Burp Suite showing an intercepted request" loading="lazy">
+              <figcaption>Add: Burp Suite screenshot with an intercepted request</figcaption>
+            </figure>
+            <span class="project-state">Web Security</span>
+            <h3>Burp Suite Request Interception</h3>
+            <p>Intercepting and analyzing an HTTP request while solving a web-security lab, then validating the issue responsibly.</p>
+            <div class="tag-list"><span class="tag">Burp Suite</span><span class="tag">HTTP</span><span class="tag">OWASP</span></div>
+            <div class="project-links"><a class="button" href="https://tryhackme.com/p/am3492398" target="_blank" rel="noopener noreferrer">View TryHackMe profile ↗</a></div>
+            <p class="project-disclaimer">Authorized lab environments only.</p>
+          </article>
+          <article class="project-card reveal">
+            <figure class="project-shot">
+              <img src="images/writeup-github.png" alt="Cover or excerpt of a lab write-up on GitHub" loading="lazy">
+              <figcaption>Add: cover or excerpt of your write-up</figcaption>
+            </figure>
+            <span class="project-state">Write-up</span>
+            <h3>Lab Write-up on GitHub</h3>
+            <p>A write-up I authored covering methodology, findings, impact, and remediation, published on GitHub.</p>
+            <div class="tag-list"><span class="tag">Reporting</span><span class="tag">Documentation</span><span class="tag">GitHub</span></div>
+            <div class="project-links"><a class="button" href="https://github.com/ahmed12080" target="_blank" rel="noopener noreferrer">Read write-up ↗</a></div>
+            <p class="project-disclaimer">Written by me, based on authorized labs.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">08 / The path so far</p>
+          <h2>One step at a time, from <span class="accent">networks to security.</span></h2>
+          <p>A learning journey, not a list of claimed job titles or professional engagements.</p>
+        </div>
+        <div class="timeline reveal">
+          <article class="timeline-item"><h3>Networking & computer fundamentals</h3><p>The starting point: understanding how systems communicate and how their building blocks fit together.</p><span class="mono">Foundation</span></article>
+          <article class="timeline-item"><h3>CCNA-oriented training & Cisco Academy learning</h3><p>Structured study and training to develop networking knowledge.</p><span class="mono">Training background</span></article>
+          <article class="timeline-item"><h3>CCST Networking</h3><p>Earned networking credential, with a score of 788 / 1000.</p><span class="mono">Credential achieved</span></article>
+          <article class="timeline-item"><h3>Cybersecurity fundamentals & practical training</h3><p>Expanding from network foundations toward security topics through training and guided exercises.</p><span class="mono">Developing</span></article>
+          <article class="timeline-item"><h3>Vulnerability assessment & penetration testing</h3><p>Building a structured methodology through current professional development and authorized lab practice.</p><span class="mono">Current development</span></article>
+          <article class="timeline-item"><h3>Web, API & broader application security</h3><p>Deepening my focus on applications, authentication, authorization, and security testing.</p><span class="mono">Current focus</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="terminal">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">09 / A small terminal view</p>
+          <h2>My current focus, <span class="accent">without the fake output.</span></h2>
+          <p>A simple interactive snapshot of my learning path — not scan results or evidence of a penetration test.</p>
+        </div>
+        <div class="terminal reveal" aria-label="Interactive portfolio terminal">
+          <div class="terminal-bar"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-title">ahmed@security-lab: ~</span></div>
+          <div class="terminal-body" id="terminal-output" aria-live="polite" aria-atomic="true">
+            <p class="terminal-line"><span class="terminal-prompt">ahmed@security-lab:~$</span> <span id="terminal-command">whoami</span></p>
+            <p class="terminal-output" id="terminal-result">Ahmed Mostafa — Penetration Testing Engineer<br><strong>Focus:</strong> Penetration Testing · Vulnerability Assessment · Web Security</p>
+          </div>
+          <div class="terminal-controls" role="group" aria-label="Choose a terminal view">
+            <button class="command-button" type="button" data-command="whoami">whoami</button>
+            <button class="command-button" type="button" data-command="current_focus">current_focus</button>
+            <button class="command-button" type="button" data-command="status">status</button>
+          </div>
+        </div>
+        <p class="terminal-caption">Personal learning snapshot only. No targets, vulnerabilities, or test outcomes are simulated.</p>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div>
+            <p class="eyebrow">10 / Contact</p>
+            <h2>Let’s connect around <span class="accent">security and learning.</span></h2>
+            <p>Open to cybersecurity opportunities, internships, freelance security work, collaboration, and technical projects. Feel free to reach out through any of the channels below.</p>
+          </div>
+          <div class="contact-list" aria-label="Contact profile placeholders">
+            <a class="contact-placeholder" href="https://github.com/ahmed12080" target="_blank" rel="noopener noreferrer"><span>GitHub</span><small>github.com/ahmed12080</small></a>
+            <a class="contact-placeholder" href="https://www.linkedin.com/in/ahmed-mostafa-857a36348" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><small>Ahmed Mostafa</small></a>
+            <a class="contact-placeholder" href="mailto:am3492398@gmail.com"><span>Email</span><small>am3492398@gmail.com</small></a>
+            <a class="contact-placeholder" href="https://tryhackme.com/p/am3492398" target="_blank" rel="noopener noreferrer"><span>TryHackMe</span><small>tryhackme.com/p/am3492398</small></a>
+            <a class="contact-placeholder" href="https://wa.me/201284631827" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><small>+20 128 463 1827</small></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>Ahmed Mostafa · Penetration Testing Engineer</p>
+      <p>Learn deliberately. Practice responsibly. Keep improving.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      navLinks.classList.toggle("open", !isOpen);
+    });
+
+    navLinks.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        menuButton.setAttribute("aria-expanded", "false");
+        navLinks.classList.remove("open");
+      }
+    });
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+
+    const sectionLinks = [...document.querySelectorAll(".nav-links a")];
+    const sections = sectionLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sectionLinks.forEach((link) => {
+            if (link.getAttribute("href") === `#${entry.target.id}`) {
+              link.setAttribute("aria-current", "location");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        }
+      });
+    }, { rootMargin: "-35% 0px -55% 0px" });
+    sections.forEach((section) => sectionObserver.observe(section));
+
+    document.querySelectorAll(".project-shot img").forEach((img) => {
+      const markMissing = () => img.closest(".project-shot").classList.add("missing");
+      img.addEventListener("error", markMissing);
+      if (img.complete && img.naturalWidth === 0) markMissing();
+    });
+
+    const terminalViews = {
+      whoami: "Ahmed Mostafa — Penetration Testing Engineer<br><strong>Focus:</strong> Penetration Testing · Vulnerability Assessment · Web Security",
+      current_focus: "<strong>Current focus:</strong> Web Security · Pentesting · Python Automation · Network Security<br><strong>Learning:</strong> Hands-on labs and security fundamentals",
+      status: "<strong>[+] Learning</strong><br><strong>[+] Practicing in authorized environments</strong><br><strong>[+] Building toward professional penetration testing</strong>"
+    };
+    const terminalCommand = document.getElementById("terminal-command");
+    const terminalResult = document.getElementById("terminal-result");
+    document.querySelectorAll(".command-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const command = button.dataset.command;
+        terminalCommand.textContent = command;
+        terminalResult.innerHTML = terminalViews[command];
+      });
+    });
+  </script>
+</body>
+</html>
+
